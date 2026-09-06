@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: heart-disease-api
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: heart-disease-api
+
+  template:
+    metadata:
+      labels:
+        app: heart-disease-api
+
+    spec:
+      containers:
+        - name: heart-disease-api
+
+          image: us-central1-docker.pkg.dev/project-a74bda7f-3a9e-4ff2-a23/iris-repo/heart-disease-api:v1
+
+          ports:
+            - containerPort: 8000
+
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 20

@@ -1,0 +1,12 @@
+.git
+.github
+.env
+.venv
+__pycache__
+*.pyc
+.ipynb_checkpoints
+*.ipynb
+D2
+D3
+HeartDiseaseTrainingAndPrediction.py
+README.md
