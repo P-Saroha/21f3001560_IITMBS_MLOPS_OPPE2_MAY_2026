@@ -1,3 +1,6 @@
+import json
+from datetime import datetime, timezone
+
 import numpy as np
 import pandas as pd
 
@@ -120,15 +123,18 @@ def predict(data: HeartDiseaseInput):
 
     try:
 
+        # Convert request to dictionary
+        input_data = data.model_dump()
+
         # Convert request to DataFrame
-        row = pd.DataFrame([data.model_dump()])
+        row = pd.DataFrame([input_data])
 
         # Apply EXACT same gender preprocessing
         #
-        # The training notebook uses:
+        # Training notebook:
         # df["gender"] = pd.factorize(df["gender"])[0]
         #
-        # For the dataset:
+        # Dataset mapping:
         # female -> 0
         # male   -> 1
         #
@@ -169,7 +175,7 @@ def predict(data: HeartDiseaseInput):
         # Prediction
         prediction = model.predict(row)[0]
 
-        # Probability of predicted class
+        # Probability of each class
         probabilities = model.predict_proba(row)[0]
 
         classes = model.classes_
@@ -178,6 +184,29 @@ def predict(data: HeartDiseaseInput):
             str(cls): float(prob)
             for cls, prob in zip(classes, probabilities)
         }
+
+        # ====================================================
+        # D5: Per-sample prediction logging
+        # ====================================================
+
+        prediction_log = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "input_features": input_data,
+            "predicted_output": str(prediction),
+            "probabilities": probability_map
+        }
+
+        # Print structured JSON to stdout.
+        # GKE automatically collects container stdout
+        # and makes it available in Google Cloud Logging.
+        print(
+            json.dumps(prediction_log),
+            flush=True
+        )
+
+        # ====================================================
+        # API response
+        # ====================================================
 
         return {
             "prediction": str(prediction),
