@@ -1,0 +1,15 @@
+feature,type,ks_statistic,p_value,psi,drift_detected
+sno,numerical,0.060462,0.927278,0.071056,False
+age,numerical,0.191485,0.006756,0.851672,True
+gender,categorical,,,0.207259,True
+cp,categorical,,,0.437249,True
+trestbps,numerical,0.332609,0.0,1.679942,True
+chol,numerical,0.29106,4e-06,0.878157,True
+fbs,categorical,,,0.41222,True
+restecg,categorical,,,0.826611,True
+thalach,numerical,0.285705,7e-06,0.491867,True
+exang,categorical,,,0.098544,False
+oldpeak,numerical,0.494983,0.0,2.08207,True
+slope,categorical,,,0.464339,True
+ca,categorical,,,1.044806,True
+thal,categorical,,,2.067904,True
