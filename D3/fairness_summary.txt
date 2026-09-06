@@ -1,0 +1,33 @@
+D3 Fairness Analysis
+====================
+
+Sensitive attribute: age
+Positive class: yes
+Age groups: <=40, 41-50, 51-60, 61+
+
+Best parameters: {'solver': 'liblinear', 'C': np.float64(0.615848211066026)}
+Overall test accuracy: 0.9830508474576272
+
+Age group counts:
+age
+<=40      5
+41-50    17
+51-60    23
+61+      14
+
+Fairness metrics by age group:
+       accuracy  selection_rate
+age                            
+41-50  1.000000        0.647059
+51-60  0.956522        0.608696
+61+    1.000000        0.428571
+<=40   1.000000        0.800000
+
+Demographic parity difference: 0.3714285714285715
+Demographic parity ratio: 0.5357142857142857
+
+Interpretation:
+The highest positive prediction rate is for the <=40 age group (0.8000).
+The lowest positive prediction rate is for the 61+ age group (0.4286).
+The demographic parity difference is 0.3714. A value closer to 0 indicates smaller disparity.
+The demographic parity ratio is 0.5357. A value closer to 1 indicates greater parity.
